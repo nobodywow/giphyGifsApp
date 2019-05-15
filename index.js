@@ -1,5 +1,6 @@
 // import {fetchData} from './api';
 
+const URL = window.location;
 const API_KEY = 'GJ3cFTvnDd8Qu2U0fB5feCKamyvnrarm';
 
 const createKeyWordURL = (keyWords) => {
@@ -23,7 +24,7 @@ const queryProcessing = (gifData, dataArray) => {
 
 // to fix keyword
 const fetchData = async (keyWord, dataArray) => {
-    const giphyResponse = await fetch(`http://api.giphy.com/v1/gifs/search?q=${createKeyWordURL(keyWord)}&api_key=${API_KEY}&limit=5`).then(response => response.json());
+    const giphyResponse = await fetch(`https://api.giphy.com/v1/gifs/search?q=${createKeyWordURL(keyWord)}&api_key=${API_KEY}&limit=5`).then(response => response.json());
     dataArray = queryProcessing(giphyResponse, dataArray);
     return [ dataArray, createKeyWordURL(keyWord) ];
 }
@@ -34,7 +35,7 @@ const displayImages = (gifsData) => {
     gifsData.forEach((item) => {
         let a = document.createElement('a');
         let img = document.createElement('img');
-        a.href = `http://localhost:5500/gif/${item.id}`;        
+        a.href = `${URL}${item.id}`;        
         img.src = item.previewImgURL;
         a.appendChild(img);
         container.appendChild(a);
