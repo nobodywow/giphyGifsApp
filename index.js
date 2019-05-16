@@ -34,7 +34,7 @@ const createContentContainer = (gifData) => {
     gifData.forEach((item) => {
         let a = document.createElement('a');
         let img = document.createElement('img');
-        a.href = `${window.location.origin}#/gif/${item.id}`;        
+        a.href = `${window.location.origin}/giphyGifsApp/#/gif/${item.id}`;        
         img.src = item.previewImgURL;
         a.appendChild(img);
         contentContainer.appendChild(a);
