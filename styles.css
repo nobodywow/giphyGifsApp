@@ -8,6 +8,11 @@ body {
     justify-content: center;
 }
 
+.search-container {
+    display: flex;
+    border: 3px solid green; 
+    justify-content: center;
+}
 .btn {
 
 }
