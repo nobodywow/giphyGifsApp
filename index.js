@@ -1,7 +1,6 @@
 // import {fetchData} from './api';
 
 
-
 sessionStorage.setItem("index", 0);
 const URL = window.location;
 const API_KEY = 'GJ3cFTvnDd8Qu2U0fB5feCKamyvnrarm';
@@ -21,13 +20,14 @@ const createSearchContainer = () => {
     let button = document.createElement('button');
     button.innerHTML = 'Search'
     button.id = 'search-btn';
+    button.disabled = true;
     searchContainer.appendChild(input);
     searchContainer.appendChild(button);
     container.appendChild(searchContainer);
 }
 
 const createContentContainer = (gifData) => {
-    let index = sessionStorage.getItem('index');
+    let index = Number(sessionStorage.getItem('index'));
     let contentContainer = document.createElement('div');
     contentContainer.classList.add('content-container');
     gifData = gifData.slice(0, index + 5);
@@ -93,18 +93,27 @@ const renderElements = () => {
         document.getElementById('container').innerHTML = '';
         createSearchContainer();
         createContentContainer(gifsData);
+        let input = document.getElementById('search-input');
+        input.addEventListener('keyup', () => {
+            let button = document.getElementById('search-btn');
+            if(input.value.length === 0) {
+                button.disabled = true;        
+            } else if(input.value.length > 0) {
+                button.disabled = false;
+            }
+        });    
         document.getElementById('load-btn').addEventListener('click', () => {
             setIndex();
         });        
     }
 
     if(window.location.hash.includes('gif')) {
+        
         document.getElementById('container').innerHTML = '';
         let id = window.location.hash.split('/').pop();
         let gifInfo = gifsData.reduce((accum, item) => {
             return item.id == id ? item : accum;
         }, {});
-        createGifContainer(gifInfo);
     }
 }
 
