@@ -37,8 +37,6 @@ export const createContentContainer = (gifData, index) => {
     document.getElementById('container').appendChild(loadButton);
 }
 
-//gif one more fetch for 1gif
-
 export const createGifContainer = async () => {
     let id = window.location.hash.split('/').pop();
     let gifElement = await fetchSingleGifData(id);

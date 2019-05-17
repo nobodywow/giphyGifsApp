@@ -4,7 +4,6 @@ const createKeyWordURL = (keyWords) => {
     return keyWords.split(' ').join('+');    
 }
 
-
 const gifInfoProcessing = (gifData) => {
     let dataObject = {};
     dataObject.id = gifData.data.id
@@ -28,12 +27,10 @@ const queryProcessing = (gifData, dataArray) => {
         dataObject.previewImgURL = item.images.fixed_height_small.url;
         dataObject.originalImgURL = item.images.original.url;
         return dataObject;
-        // gifInfoProcessing(item);
     });
     return dataArray;
 }
 
-// to fix keyword
 export const fetchData = async (keyWord, dataArray) => {
     const giphyResponse = await fetch(`https://api.giphy.com/v1/gifs/search?q=${createKeyWordURL(keyWord)}&api_key=${API_KEY}&limit=20`).then(response => response.json());
     console.log(giphyResponse);
