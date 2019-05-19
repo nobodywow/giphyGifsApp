@@ -4,38 +4,33 @@ const createKeyWordURL = (keyWords) => {
     return keyWords.split(' ').join('+');    
 }
 
-const gifInfoProcessing = (gifData) => {
-    let dataObject = {};
-    dataObject.id = gifData.data.id
-    dataObject.title = gifData.data.title;
-    dataObject.username = gifData.data.username;
-    dataObject.avatarURL = gifData.data.username ? gifData.data.user.avatar_url : '';
-    dataObject.postDate = gifData.data.import_datetime;
-    dataObject.previewImgURL = gifData.data.images.fixed_height_small.url;
-    dataObject.originalImgURL = gifData.data.images.original.url;
+const createGifDataObject = (dataObject, gifData) => {
+    dataObject.id = gifData.id
+    dataObject.title = gifData.title;
+    dataObject.username = gifData.username;
+    dataObject.avatarURL = gifData.username ? gifData.user.avatar_url : '';
+    dataObject.postDate = gifData.import_datetime;
+    dataObject.previewImgURL = gifData.images.fixed_height_small.url;
+    dataObject.originalImgURL = gifData.images.original.url;
     return dataObject;
 }
 
-const queryProcessing = (gifData, dataArray) => {
+const gifInfoProcessing = (gifData) => {
+    let dataObject = {};
+    return createGifDataObject(dataObject, gifData.data);
+}
+
+const gifsArrayProcessing = (gifData, dataArray) => {
     dataArray = gifData.data.map((item) => {
         let dataObject = {};
-        dataObject.id = item.id;
-        dataObject.title = item.title;
-        dataObject.username = item.username;
-        dataObject.avatarURL = item.username ? item.user.avatar_url : '';
-        dataObject.postDate = item.import_datetime;
-        dataObject.previewImgURL = item.images.fixed_height_small.url;
-        dataObject.originalImgURL = item.images.original.url;
-        return dataObject;
+        return createGifDataObject(dataObject, item);
     });
     return dataArray;
 }
 
-export const fetchData = async (keyWord, dataArray) => {
+export const fetchGifArrayData = async (keyWord, dataArray) => {
     const giphyResponse = await fetch(`https://api.giphy.com/v1/gifs/search?q=${createKeyWordURL(keyWord)}&api_key=${API_KEY}&limit=20`).then(response => response.json());
-    console.log(giphyResponse);
-    dataArray = queryProcessing(giphyResponse, dataArray);
-    console.log(dataArray);
+    dataArray = gifsArrayProcessing(giphyResponse, dataArray);
     return [ dataArray, createKeyWordURL(keyWord) ];
 }
 

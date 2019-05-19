@@ -1,25 +1,28 @@
-import {fetchData, fetchSingleGifData} from './api.js';
+import {fetchSingleGifData} from './api.js';
 
 export const createSearchContainer = () => {
     let container = document.getElementById('container');
     let searchContainer = document.createElement('div');
-    searchContainer.classList.add('search-container');
-    let input = document.createElement('input');
+    let button = document.createElement('button');
+    let input = document.createElement('input');        
     input.id = 'search-input';
     input.autofocus = true;
     input.placeholder = 'Enter gif keywords...';
     input.type = 'text';
-    let button = document.createElement('button');
+    input.value = '';
     button.innerHTML = 'Search'
     button.id = 'search-btn';
     button.disabled = true;
+    searchContainer.classList.add('search-container');
     searchContainer.appendChild(input);
     searchContainer.appendChild(button);
     container.appendChild(searchContainer);
 }
 
 export const createContentContainer = (gifData, index) => {
+    let container = document.getElementById('container');
     let contentContainer = document.createElement('div');
+    let loadButton = document.createElement('button');
     contentContainer.classList.add('content-container');
     gifData = gifData.slice(0, index + 5);
     gifData.forEach((item) => {
@@ -30,39 +33,42 @@ export const createContentContainer = (gifData, index) => {
         a.appendChild(img);
         contentContainer.appendChild(a);
     });          
-    let loadButton = document.createElement('button');
     loadButton.id = 'load-btn';
     loadButton.innerHTML = 'more gifs...';  
-    document.getElementById('container').appendChild(contentContainer);
-    document.getElementById('container').appendChild(loadButton);
+    container.appendChild(contentContainer);
+    container.appendChild(loadButton);
 }
 
 export const createGifContainer = async () => {
-    let id = window.location.hash.split('/').pop();
-    let gifElement = await fetchSingleGifData(id);
+    let gifID = window.location.hash.split('/').pop();
+    let gifElement = await fetchSingleGifData(gifID);
     let gifContainer = document.createElement('div');
-    gifContainer.classList.add('gif-container');
+    let infoContainer = document.createElement('div');
     let avatar = document.createElement('img');
-    let username = document.createElement('p');
+    let username = document.createElement('span');
     let datePublished = document.createElement('p');
     let gif = document.createElement('img');
     let backButton = document.createElement('button');
     backButton.onclick = () => {
         window.location.hash = ''; 
-    };
+    };    
+    backButton.innerHTML = 'go back';
+    backButton.id = 'back-btn';    
     avatar.src = gifElement.avatarURL;
     avatar.height =  50;
     avatar.width = 50;
-    username.innerHTML = 'Username: ' + gifElement.username;
-    datePublished.innerHTML = 'Published: ' + gifElement.postDate.split(' ')[0];
     gif.src = gifElement.originalImgURL;
-    backButton.innerHTML = 'go back';
-    backButton.id = 'back-btn';
+    gifContainer.classList.add('gif-container');
     gifContainer.appendChild(gif);
-    gifContainer.appendChild(avatar);
-    gifContainer.appendChild(username);
-    gifContainer.appendChild(datePublished);
+    datePublished.innerHTML = `Published: ${gifElement.postDate.split(' ')[0]}`;    
+    username.innerHTML = `Username: ${gifElement.username}`;
+    if(username !== '') {
+        infoContainer.appendChild(avatar);
+        infoContainer.appendChild(username);
+    }    
+    infoContainer.classList.add('info-container');
+    infoContainer.appendChild(datePublished);
+    gifContainer.appendChild(infoContainer);
     gifContainer.appendChild(backButton);
     document.getElementById('container').appendChild(gifContainer);
-    localStorage.clear();
 }

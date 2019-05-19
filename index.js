@@ -1,10 +1,8 @@
-import {fetchData} from './api.js';
+import {fetchGifArrayData} from './api.js';
 import {createSearchContainer, createContentContainer, createGifContainer} from './elementsRender.js';
 
 let index = 0;
 let gifsData = [];
-
-console.log(window.location);
 
 const renderElements = async () => {
     if(window.location.hash === '') {
@@ -28,7 +26,7 @@ const renderElements = async () => {
         document.getElementById('container').innerHTML = '';
         createSearchContainer();
         if (gifsData.length === 0) {
-            let gifsObject = await fetchData(window.location.hash.split('=').pop(), gifsData);
+            let gifsObject = await fetchGifArrayData(window.location.hash.split('=').pop(), gifsData);
             gifsData = gifsObject[0];
         } 
         createContentContainer(gifsData, index);
@@ -56,9 +54,7 @@ window.addEventListener('hashchange', () => {
     renderElements();
 });
 
-
-window.dispatchEvent(new HashChangeEvent('hashchange'));
-
+window.dispatchEvent(new HashChangeEvent('hashchange')); // for front page render
 
 const setIndex = () => {
     index = index + 5;
@@ -66,13 +62,15 @@ const setIndex = () => {
 }
 
 const buttonAction = async () => {
+    gifsData = [];
+    index = 0;
     let keyWord = '';
     if(gifsData.length === 0) {    
-        var queryText = document.getElementById('search-input').value;
-        const gifsObject = await fetchData(queryText, gifsData);
+        let queryText = document.getElementById('search-input').value;
+        const gifsObject = await fetchGifArrayData(queryText, gifsData);
         [gifsData, keyWord] = [gifsObject[0], gifsObject[1]];    
     }   
     window.location.hash = `#/search?q=${keyWord}`;
 }
 
-//todo: 1) fix input(return to search page) 2) fix 'back' button on gif page 3) refactor 4) remove trash
+//todo: 3) refactor
