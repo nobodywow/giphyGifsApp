@@ -14,7 +14,7 @@ const disableSearchButton = (input) => {
         }
     });
     return input;
-}
+};
 
 const renderElements = async () => {
     if(window.location.hash === '') {
