@@ -46,12 +46,6 @@ const renderElements = async () => {
     }
 };
 
-window.addEventListener('hashchange', () => {
-    renderElements();
-});
-
-window.dispatchEvent(new HashChangeEvent('hashchange')); // for front page render
-
 const addGifsCounter = () => {
     moreGifsCounter = moreGifsCounter + 5;
     window.dispatchEvent(new HashChangeEvent('hashchange'));
@@ -68,3 +62,9 @@ const buttonAction = async () => {
     }   
     window.location.hash = `#/search?q=${keyWord}`;
 };
+
+window.addEventListener('hashchange', () => {
+    renderElements();
+});
+
+window.dispatchEvent(new HashChangeEvent('hashchange')); // for front page render
