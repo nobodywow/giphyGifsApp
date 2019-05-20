@@ -52,12 +52,12 @@ export const createGifContainer = async () => {
     avatar.src = gifElement.avatarURL;
     avatar.height =  50;
     avatar.width = 50;
-    username.innerHTML = `Username: ${gifElement.username}`;   
-    if (gifElement !== '') {
+    username.innerHTML = `Username: ${gifElement.username}`;    
+    datePublished.innerHTML = `Published: ${gifElement.postDate.split(' ')[0]}`;     
+    if (gifElement.username !== '') {
         infoContainer.appendChild(avatar);
         infoContainer.appendChild(username);
     }    
-    datePublished.innerHTML = `Published: ${gifElement.postDate.split(' ')[0]}`;    
     infoContainer.appendChild(datePublished);
     backButton.onclick = () => {
         window.location.hash = ''; 
