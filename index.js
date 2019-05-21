@@ -1,8 +1,9 @@
-import {fetchGifArrayData} from './api.js';
 import {createSearchContainer, createContentContainer, createGifContainer} from './elementsRender.js';
+import { API } from './api.js';
 
 let moreGifsCounter = 0;
 let gifsData = [];
+let gifAPI = API();
 
 const disableSearchButton = (input) => {
     input.addEventListener('keyup', () => {
@@ -31,9 +32,8 @@ const renderElements = async () => {
         document.getElementById('container').innerHTML = '';
         createSearchContainer();
         if (gifsData.length === 0) {
-            let gifsObject = await fetchGifArrayData(window.location.hash.split('=').pop(), gifsData);
-            gifsData = gifsObject[0];
-        } 
+            gifsData = await gifAPI.fetchGifArrayData(window.location.hash.split('=').pop());
+        }
         createContentContainer(gifsData, moreGifsCounter);
         let input = document.getElementById('search-input');
         disableSearchButton(input);
@@ -54,13 +54,8 @@ const addGifsCounter = () => {
 const buttonAction = async () => {
     gifsData = [];
     moreGifsCounter = 0;
-    let keyWord = '';
-    if (gifsData.length === 0) {    
-        let queryText = document.getElementById('search-input').value;
-        const gifsObject = await fetchGifArrayData(queryText, gifsData);
-        [gifsData, keyWord] = [gifsObject[0], gifsObject[1]];    
-    }   
-    window.location.hash = `#/search?q=${keyWord}`;
+    let queryText = document.getElementById('search-input').value;
+    window.location.hash = `#/search?q=${queryText}`;
 };
 
 window.addEventListener('hashchange', () => {

@@ -1,4 +1,6 @@
-import {fetchSingleGifData} from './api.js';
+import { API } from './api.js';
+
+const gifAPI = API();
 
 export const createSearchContainer = () => {
     let container = document.getElementById('container');
@@ -19,12 +21,12 @@ export const createSearchContainer = () => {
     container.appendChild(searchContainer);
 };
 
-export const createContentContainer = (gifData, index) => {
+export const createContentContainer = (gifData, moreGifsCounter) => {
     let container = document.getElementById('container');
     let contentContainer = document.createElement('div');
     let loadButton = document.createElement('button');
     contentContainer.classList.add('content-container');
-    gifData = gifData.slice(0, index + 5);
+    gifData = gifData.slice(0, moreGifsCounter + 5);
     gifData.forEach((item) => {
         let a = document.createElement('a');
         let img = document.createElement('img');
@@ -40,8 +42,8 @@ export const createContentContainer = (gifData, index) => {
 };
 
 export const createGifContainer = async () => {
-    let gifID = window.location.hash.split('/').pop();
-    let gifElement = await fetchSingleGifData(gifID);
+    let gifId = window.location.hash.split('/').pop();
+    let gifElement = await gifAPI.fetchSingleGifData(gifId);
     let gifContainer = document.createElement('div');
     let infoContainer = document.createElement('div');
     let gifImage = document.createElement('img');
