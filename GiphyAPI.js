@@ -3,21 +3,16 @@ import { env } from './env.js';
 
 class GiphyAPI extends BaseAPI {
 
-    constructor() {
-        super();
-    }
-
-    createQueryURLForKeyword = (keyword) => {
-        let queryURL = `${env.BASE_URL}search?q=${keyword.split(' ').join('+')}&api_key=${env.API_KEY}&limit=20`;
-        return queryURL;                        
+    createQueryUrlForKeyword = (keyword, limit, offset) => {
+        return `${env.BASE_URL}search?q=${keyword.replace(' ', '+')}&api_key=${env.API_KEY}&limit=${env.GIF_LIMIT}&offset=${offset}`;                 
     };
 
-    createQueryURLForId = (ID) => {
-        let queryURL = `${env.BASE_URL}${ID}?api_key=${env.API_KEY}`;
-        return queryURL;
+    createQueryUrlForId = (ID) => {
+        return `${env.BASE_URL}${ID}?api_key=${env.API_KEY}`;
     };
 
-    createGifDataObject = (dataObject, gifData) => {
+    createGifDataObject = (gifData) => {
+        let dataObject = {};
         dataObject.id = gifData.id
         dataObject.title = gifData.title;
         dataObject.username = gifData.username;
@@ -28,15 +23,13 @@ class GiphyAPI extends BaseAPI {
         return dataObject;
     };
 
-    mapSingleGifData = (gifData) => {
-        let dataObject = {};
-        return this.createGifDataObject(dataObject, gifData.data);
+    mapSingleGif = (gifData) => {
+        return this.createGifDataObject(gifData.data);
     };
 
-    mapGifArrayData = (gifData) => {
+    mapGifArray = (gifData) => {
         let dataArray = gifData.data.map((item) => {
-            let dataObject = {};
-            return this.createGifDataObject(dataObject, item);
+            return this.createGifDataObject(item);
         });
         return dataArray;
     };

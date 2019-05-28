@@ -3,7 +3,7 @@ import { API } from './api.js';
 const gifAPI = API();
 
 export const createSearchContainer = () => {
-    let container = document.getElementById('container');
+    let container = document.getElementById('container');    
     let searchContainer = document.createElement('div');
     let input = document.createElement('input');        
     let button = document.createElement('button');
@@ -21,16 +21,14 @@ export const createSearchContainer = () => {
     container.appendChild(searchContainer);
 };
 
-export const createContentContainer = (gifData, moreGifsCounter) => {
+export const createContentContainer = (gifData, linkWrapper) => { //replace createHref with method from router
     let container = document.getElementById('container');
     let contentContainer = document.createElement('div');
     let loadButton = document.createElement('button');
     contentContainer.classList.add('content-container');
-    gifData = gifData.slice(0, moreGifsCounter + 5);
     gifData.forEach((item) => {
-        let a = document.createElement('a');
+        let a = linkWrapper(item);
         let img = document.createElement('img');
-        a.href = `${window.location.href.replace(window.location.hash, '')}#/gif/${item.id}`;        
         img.src = item.previewImgURL;
         a.appendChild(img);
         contentContainer.appendChild(a);
@@ -41,9 +39,10 @@ export const createContentContainer = (gifData, moreGifsCounter) => {
     container.appendChild(loadButton);
 };
 
-export const createGifContainer = async () => {
-    let gifId = window.location.hash.split('/').pop();
-    let gifElement = await gifAPI.fetchSingleGifData(gifId);
+export const createGifContainer = async (onClickFunction) => {
+    let container = document.getElementById('container');
+    let gifId = window.location.hash.split('/').pop(); // for hash only (fix)
+    let gifElement = await gifAPI.getSingleGif(gifId);
     let gifContainer = document.createElement('div');
     let infoContainer = document.createElement('div');
     let gifImage = document.createElement('img');
@@ -61,9 +60,7 @@ export const createGifContainer = async () => {
         infoContainer.appendChild(username);
     }    
     infoContainer.appendChild(datePublished);
-    backButton.onclick = () => {
-        window.location.hash = ''; 
-    };    
+    backButton.onclick = onClickFunction;
     backButton.innerHTML = 'go back';
     backButton.id = 'back-btn';    
     gifImage.src = gifElement.originalImgURL;
@@ -72,5 +69,6 @@ export const createGifContainer = async () => {
     infoContainer.classList.add('info-container');
     gifContainer.appendChild(infoContainer);
     gifContainer.appendChild(backButton);
-    document.getElementById('container').appendChild(gifContainer);
+    container.innerHTML = '';
+    container.appendChild(gifContainer);
 };
