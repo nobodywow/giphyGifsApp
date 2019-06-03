@@ -1,6 +1,6 @@
-import { renderFrontPage } from './src/pages/FrontPage/FrontPage.js';
-import { renderSearchPage } from './src/pages/SearchPage/SearchPage.js';
-import { renderGifPage } from './src/pages/GifPage/GifPage.js';
+import { renderFrontPage } from '../pages/FrontPage/FrontPage.js';
+import { renderSearchPage } from '../pages/SearchPage/SearchPage.js';
+import { renderGifPage } from '../pages/GifPage/GifPage.js';
 
 class Render {
     
