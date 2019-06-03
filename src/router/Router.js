@@ -1,5 +1,3 @@
-import { env } from './../cfg/env.js';
-
 class Router {
 
     constructor() {
