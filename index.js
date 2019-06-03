@@ -1,5 +1,5 @@
 import { API, chooseRouter } from './src/cfg/api.js';
-import Render from './Render.js';
+import Render from './src/utils/Render.js/index.js';
 import DataHandler from './src/utils/DataHandler.js';
 
 let gifsData = [];
