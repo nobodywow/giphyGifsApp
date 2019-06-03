@@ -12,7 +12,7 @@ class UrlRouter extends Router {
     };
 
     navigateTo = (pathQuery) => {
-        history.pushState(null, null, `${window.location.pathname.split('/')[0]}/${pathQuery}`);
+        history.pushState(null, null, `${window.location.pathname.split('/')[0]}${env.PATH_SUFFIX}/${pathQuery}`);
     };
 
     detectPathnameSuffix = () => {
