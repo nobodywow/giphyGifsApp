@@ -1,4 +1,6 @@
-export const createUserInfoContainer = (gifInfo) => {
+import { getDateFormat } from '../../utils/getDateFormat.js';
+
+export const UserInfoContainer = (gifInfo) => {
     let userInfoContainer = document.createElement('div');
     let username = document.createElement('span');
     let avatar = document.createElement('img');
@@ -8,7 +10,7 @@ export const createUserInfoContainer = (gifInfo) => {
     avatar.height =  50;
     avatar.width = 50;
     username.innerHTML = `Username: ${gifInfo.username}`;
-    datePublished.innerHTML = `Published: ${gifInfo.postDate.split(' ')[0]}`; // split should be in some helper method
+    datePublished.innerHTML = `Published: ${getDateFormat(gifInfo.postDate)}`;
     userInfoContainer.appendChild(avatar);
     userInfoContainer.appendChild(username);
     userInfoContainer.appendChild(datePublished);

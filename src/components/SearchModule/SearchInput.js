@@ -1,4 +1,4 @@
-export const createSearchInput = () => {
+export const SearchInput = () => {
     let input = document.createElement('input');
     input.id = 'search-input';
     input.autofocus = true;

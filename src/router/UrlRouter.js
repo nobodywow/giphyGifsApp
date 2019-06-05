@@ -2,13 +2,10 @@ import Router from './Router.js'
 import { env } from '../cfg/env.js';
 
 class UrlRouter extends Router {
+    generateHref = (routeName, parameters) => `${window.location.origin}${env.PATH_SUFFIX}/${this.getRoutePathname(routeName, parameters)}`;
 
-    generateInfoHref = (itemInfo, routeName) => { //fix
-        return `${window.location.href.replace(window.location.href.split('/').pop(), '')}${env.PATH_SUFFIX}/${this.definePathUrl(routeName, itemInfo)}`;
-    };
-    
-    backButtonListener = () => {
-        window.addEventListener('popstate', () => this.redirect());
+    addNavigationButtonsListener = () => {
+        window.addEventListener('popstate', () => this.notifySubscribers());
     };
 
     navigateTo = (pathQuery) => {
@@ -20,9 +17,8 @@ class UrlRouter extends Router {
         if (!pathnameSuffix) {
             return '';
         }
-        return pathnameSuffix;        
+        return pathnameSuffix;
     };
-    
 }
 
 export default UrlRouter;

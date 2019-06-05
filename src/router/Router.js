@@ -1,5 +1,4 @@
 class Router {
-
     constructor() {
         this.routeCallbacks = [];
         this.callbackCounter = 0;
@@ -11,38 +10,36 @@ class Router {
         this.currentRoute = '';
     }
 
-    initializeRouter = () => {
-        this.backButtonListener();
+    initialize = () => {
+        this.addNavigationButtonsListener();
         this.currentRoute = this.detectCurrentRoute();
     };
-    
+
     detectCurrentRoute = () => {
         let pathNameSuffix = this.detectPathnameSuffix();
-        if (pathNameSuffix.indexOf('search') === 0) {
+        if (pathNameSuffix.indexOf(this.ROUTES.SEARCH) === 0) {
             return this.ROUTES.SEARCH;
-        } else if (pathNameSuffix.indexOf('gif') === 0) {
-            return this.ROUTES.GIF;            
-        } else {
+        }
+        if (pathNameSuffix.indexOf(this.ROUTES.GIF) === 0) {
+            return this.ROUTES.GIF;
+        }
+        if (pathNameSuffix === '') {
             return this.ROUTES.FRONT;
-        }        
+        }
+        return null;
     };
 
     subscribeForRouteChange = (callback) => {
         this.routeCallbacks.push(callback);
-        return this.callbackCounter++;
+        return ++this.callbackCounter;
     };
 
     unsubscribeFromRouteChange = (id) => {
         this.routeCallbacks[id] = null;
     };
 
-    redirect = (nextRoute, queryInfo) => {
-        if (!nextRoute) {
-            this.currentRoute = this.detectCurrentRoute();
-        } else {
-            this.navigateTo(this.definePathUrl(nextRoute, queryInfo));
-            this.currentRoute = nextRoute;
-        }        
+    notifySubscribers = () => {
+        this.currentRoute = this.detectCurrentRoute();
         this.routeCallbacks.forEach((item) => {
             if (typeof item === 'function') {
                 item(this.currentRoute);
@@ -50,25 +47,35 @@ class Router {
         });
     };
 
-    definePathUrl = (nextRoute, queryInfo) => {
+    navigate = (nextRoute, parameters) => {
+        this.navigateTo(this.getRoutePathname(nextRoute, parameters));
+        this.currentRoute = nextRoute;        
+        this.routeCallbacks.forEach((item) => {
+            if (typeof item === 'function') {
+                item(this.currentRoute);
+            }
+        });
+    };
+
+    getRoutePathname = (nextRoute, parameters) => {
         let pathQuery = '';
         if (nextRoute === this.ROUTES.SEARCH) {
-            pathQuery = `${this.ROUTES.SEARCH}?q=${queryInfo}`;
+            pathQuery = `${this.ROUTES.SEARCH}?q=${parameters}`;
         } else if (nextRoute === this.ROUTES.GIF) {
-            pathQuery = `${this.ROUTES.GIF}/${queryInfo}`;
+            pathQuery = `${this.ROUTES.GIF}/${parameters}`;
         } else if (nextRoute === this.ROUTES.FRONT) {
             pathQuery = '';
         }
         return pathQuery;
     };
 
-    createLinkWrapper = (itemInfo, nextRoute) => {
+    linkWrapper = (nextRoute, parameters) => {
         let linkWrapper = document.createElement('a');
-        linkWrapper.href = this.generateInfoHref(itemInfo, nextRoute); 
+        linkWrapper.href = this.generateHref(nextRoute, parameters);
         linkWrapper.onclick = (event) => {
             event.preventDefault();
-            this.redirect(nextRoute, itemInfo);
-        }; 
+            this.navigate(nextRoute, parameters);
+        };
         return linkWrapper;
     };
 }

@@ -1,17 +1,17 @@
-import BaseApi from './BaseAPI.js';
+import BaseApi from './BaseApi.js';
 import { env } from './../cfg/env.js';
 
 class GiphyApi extends BaseApi {
 
-    createQueryUrlForKeyword = (keyword, limit, offset) => {
+    queryUrlForKeyword = (keyword, limit, offset) => {
         return `${env.BASE_URL}search?q=${keyword.replace(' ', '+')}&api_key=${env.API_KEY}&limit=${limit}&offset=${offset}`;                 
     };
 
-    createQueryUrlForId = (id) => {
+    queryUrlForId = (id) => {
         return `${env.BASE_URL}${id}?api_key=${env.API_KEY}`;
     };
 
-    createGifDataObject = (gifData) => {
+    GifDataObject = (gifData) => {
         let dataObject = {};
         dataObject.id = gifData.id
         dataObject.title = gifData.title;
@@ -24,12 +24,12 @@ class GiphyApi extends BaseApi {
     };
 
     mapSingleGif = (gifData) => {
-        return this.createGifDataObject(gifData.data);
+        return this.GifDataObject(gifData.data);
     };
 
     mapGifArray = (gifData) => {
         let dataArray = gifData.data.map((item) => {
-            return this.createGifDataObject(item);
+            return this.GifDataObject(item);
         });
         return dataArray;
     };

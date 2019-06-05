@@ -1,13 +1,12 @@
-import { API, chooseRouter } from './src/cfg/api.js';
-import Render from './src/utils/Render.js';
-import DataHandler from './src/utils/DataHandler.js';
+import { api, chooseRouter } from './src/cfg/chooseImplementations.js';
+import Render from './src/Render.js';
+import DataService from './src/utils/DataService.js';
 
-let gifsData = [];
-let moreGifsCounter = 0;
-let gifAPI = API();
-let router = chooseRouter();
-let dataHandler = new DataHandler(gifsData, moreGifsCounter, gifAPI);
-let renderMethod = new Render(gifAPI, router, dataHandler);
+const container = document.getElementById('container');
+const gifApi = api();
+const router = chooseRouter();
+const dataService = new DataService(gifApi);
+const renderMethod = new Render(container, router, dataService);
 
 renderMethod.initialize();
 renderMethod.renderElements(router.currentRoute);

@@ -1,4 +1,4 @@
-export const createPreviewImage = (imageSource) => {
+export const PreviewImage = (imageSource) => {
     let img = document.createElement('img');
     img.src = imageSource;
     return img;

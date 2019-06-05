@@ -1,7 +1,9 @@
-import { combineGifContainer } from './../../components/Gif/Gif.js';
+import { SingleGifModule } from '../../components/SingleGifModule/SingleGifModule.js';
+import { clearAndExpandContainer } from '../utils/helper.js';
 
-export const renderGifPage = async (router, dataHandler) => {
-    container.innerHTML = '';
-    let gifContainer = await combineGifContainer(router, dataHandler);
-    container.appendChild(gifContainer);
+const container = document.getElementById('container');
+
+export const renderGifPage = async (router, dataService) => {
+    let gifContainer = await SingleGifModule(router, dataService);
+    clearAndExpandContainer(container, gifContainer);
 };

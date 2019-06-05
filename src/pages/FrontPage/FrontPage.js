@@ -1,7 +1,9 @@
-import { combineSearchContainer } from './../../components/Search/Search.js';
+import { SearchModule } from '../../components/SearchModule/SearchModule.js';
+import { clearAndExpandContainer } from '../utils/helper.js';
 
-export const renderFrontPage = (router, dataHandler) => {
-    container.innerHTML = '';
-    let searchContainer = combineSearchContainer(router, dataHandler);
-    container.appendChild(searchContainer);
+const container = document.getElementById('container');
+
+export const renderFrontPage = (router) => {
+    let searchContainer = SearchModule(router);
+    clearAndExpandContainer(container, searchContainer);
 };
