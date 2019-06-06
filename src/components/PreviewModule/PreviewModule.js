@@ -1,5 +1,5 @@
 import { ContentContainer } from './ContentContainer.js';
-import { PreviewImage } from './PreviewImage.js';
+import { Image } from './../shared/Image.js';
 import { LoadButton } from './LoadButton.js';
 import { ErrorMessage } from './ErrorMessage.js';
 import { ButtonContainer } from './ButtonContainer.js';
@@ -49,7 +49,7 @@ const showGifPreviews = (gifData, router, imageContainer) => {
     } else {
         gifData.forEach((item) => {
             let a = router.linkWrapper(router.ROUTES.GIF, item.id);
-            let img = PreviewImage(item.previewImgURL);
+            let img = Image(item.previewImgURL);
             a.appendChild(img);
             imageContainer.appendChild(a);
         });        

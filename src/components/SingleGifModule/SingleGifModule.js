@@ -1,6 +1,6 @@
 import { BackButton } from './BackButton.js';
 import { GifContainer } from './GifContainer.js';
-import { GifImage } from './GifImage.js';
+import { Image } from '../shared/Image.js';
 import { UserInfoContainer } from './UserInfoContainer.js';
 
 let gifCache = {};
@@ -11,7 +11,7 @@ export const SingleGifModule = async (router, gifApi, parameters) => {
     }
     let gifContainer = GifContainer();
     let infoContainer = UserInfoContainer(gifCache);
-    let gifImage = GifImage(gifCache);
+    let gifImage = Image(gifCache.originalImgURL);
     let backButton = BackButton();
     backButton.onclick = () => {
         router.navigate(router.ROUTES.FRONT);
