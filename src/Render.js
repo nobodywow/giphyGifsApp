@@ -4,10 +4,10 @@ import { renderGifPage } from './pages/GifPage/GifPage.js';
 
 class Render {
     
-    constructor(container, router, dataService) {
+    constructor(container, router, gifApi) {
         this.container = container;
         this.router = router;
-        this.dataService = dataService;
+        this.gifApi = gifApi;
         this.routerCallbackId = 0;
     }
 
@@ -16,14 +16,14 @@ class Render {
         this.routerCallbackId = this.router.subscribeForRouteChange(this.renderElements);
     };
 
-    renderElements = (state) => {
+    renderElements = (state, parameters) => {
         this.container.innerHTML = '';
         if (state === this.router.ROUTES.FRONT) { 
             renderFrontPage(this.router);
         } else if (state === this.router.ROUTES.SEARCH) {
-            renderSearchPage(this.router, this.dataService);
+            renderSearchPage(this.router, this.gifApi, parameters);
         } else if (state === this.router.ROUTES.GIF) {        
-            renderGifPage(this.router, this.dataService);
+            renderGifPage(this.router, this.gifApi, parameters);
         }
     };
 }

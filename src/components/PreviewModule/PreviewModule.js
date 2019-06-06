@@ -5,24 +5,34 @@ import { ErrorMessage } from './ErrorMessage.js';
 import { ButtonContainer } from './ButtonContainer.js';
 import { ImageContainer } from './ImageContainer.js';
 
+const GIF_LIMIT = 5;
+const GIF_OFFSET = 5;
+
 let gifsData = [];
 let gifOffset = 0;
+let keyword = '';
 
-export const PreviewModule = (router, dataService) => {
-    let keyword = window.location.href.split('=')[1];  // fix somehow
+export const PreviewModule = (router, gifApi, parameters) => {
+    if (parameters) {
+        keyword = parameters;
+        gifsData.length = 0;
+        gifOffset = 0;
+    }
     let loadButton = LoadButton();
     let contentContainer = ContentContainer();
     let buttonContainer = ButtonContainer();
     let imageContainer = ImageContainer();
-    (async () => {
-        if (gifsData.length === 0) {
-            gifsData = await dataService.getDataArray(gifOffset, keyword);
-        }        
+    if (gifsData.length === 0) {
+        (async () => {
+            gifsData = await gifApi.getGifArray(keyword, GIF_LIMIT, gifOffset);
+            showGifPreviews(gifsData, router, imageContainer);
+        })();
+    } else {
         showGifPreviews(gifsData, router, imageContainer);
-    })();
+    }    
     loadButton.onclick = async () => {
-        gifOffset += 5;
-        let offsetArray = await dataService.getDataArray(gifOffset, keyword);
+        gifOffset += GIF_OFFSET;
+        let offsetArray = await gifApi.getGifArray(keyword, GIF_LIMIT, gifOffset);
         showGifPreviews(offsetArray, router, imageContainer);
         gifsData = [...gifsData, ...offsetArray];
     };

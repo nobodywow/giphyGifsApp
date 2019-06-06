@@ -1,4 +1,5 @@
 class Router {
+    
     constructor() {
         this.routeCallbacks = [];
         this.callbackCounter = 0;
@@ -49,10 +50,10 @@ class Router {
 
     navigate = (nextRoute, parameters) => {
         this.navigateTo(this.getRoutePathname(nextRoute, parameters));
-        this.currentRoute = nextRoute;        
+        this.currentRoute = nextRoute;
         this.routeCallbacks.forEach((item) => {
             if (typeof item === 'function') {
-                item(this.currentRoute);
+                item(this.currentRoute, parameters);
             }
         });
     };

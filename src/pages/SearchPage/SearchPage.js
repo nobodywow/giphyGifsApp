@@ -4,8 +4,8 @@ import { clearAndExpandContainer } from '../utils/helper.js';
 
 const container = document.getElementById('container');
 
-export const renderSearchPage = (router, dataService) => {
-    let searchContainer = SearchModule(router, dataService);
-    let contentContainer = PreviewModule(router, dataService);
+export const renderSearchPage = (router, gifApi, parameters) => {
+    let searchContainer = SearchModule(router, gifApi);
+    let contentContainer = PreviewModule(router, gifApi, parameters);
     clearAndExpandContainer(container, searchContainer, contentContainer);
 };

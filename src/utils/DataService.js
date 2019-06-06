@@ -1,20 +1,19 @@
 class DataService { // remove and replace with api
-    constructor(gifAPI) {
+    constructor(gifApi) {
         this.QUERY_CONSTS = {
             GIF_LIMIT: 5,
-            OFFSET: 5,
         };
-        this.gifAPI = gifAPI;
+        this.gifApi = gifApi;
     }
 
     getDataArray = async (offset, keyword) => {
         let responseData = [];
-        responseData = await this.gifAPI.getGifArray(keyword, this.QUERY_CONSTS.GIF_LIMIT, offset);
+        responseData = await this.gifApi.getGifArray(keyword, this.QUERY_CONSTS.GIF_LIMIT, offset);
         return responseData;
     };
 
     getDataObject = async (gifId) => {
-        let gifElement = await this.gifAPI.getSingleGif(gifId);
+        let gifElement = await this.gifApi.getSingleGif(gifId);
         return gifElement;
     };
 }

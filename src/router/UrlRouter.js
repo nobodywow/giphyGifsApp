@@ -2,6 +2,7 @@ import Router from './Router.js'
 import { env } from '../cfg/env.js';
 
 class UrlRouter extends Router {
+    
     generateHref = (routeName, parameters) => `${window.location.origin}${env.PATH_SUFFIX}/${this.getRoutePathname(routeName, parameters)}`;
 
     addNavigationButtonsListener = () => {
