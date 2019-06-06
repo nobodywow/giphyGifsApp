@@ -1,4 +1,4 @@
-class DataService { // remove and replace with api
+class DataService {
     constructor(gifApi) {
         this.QUERY_CONSTS = {
             GIF_LIMIT: 5,
