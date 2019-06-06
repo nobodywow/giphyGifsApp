@@ -3,7 +3,7 @@ import { env } from '../cfg/env.js';
 
 class HashRouter extends Router {
 
-    generateHref = (routeName, parameters) => `${window.location.origin}/#${env.PATH_SUFFIX}/${this.getRoutePathname(routeName, parameters)}`;
+    generateHref = (routeName, parameters) => `${window.location.origin}/#${env.PATH_SUFFIX}/${this.composeRoutePathname(routeName, parameters)}`;
 
     addNavigationButtonsListener = () => {
         window.addEventListener('hashchange', () => this.notifySubscribers());
@@ -13,7 +13,7 @@ class HashRouter extends Router {
         window.location.hash = `#/${pathQuery}`;
     };
 
-    detectPathnameSuffix = () => {
+    getPathname = () => {
         let pathnameSuffix = window.location.href.replace(`${window.location.origin}${env.PATH_SUFFIX}`, '').split('/')[2];
         if (!pathnameSuffix) {
             return '';

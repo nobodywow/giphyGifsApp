@@ -17,7 +17,7 @@ class Router {
     };
 
     detectCurrentRoute = () => {
-        let pathNameSuffix = this.detectPathnameSuffix();
+        let pathNameSuffix = this.getPathname();
         if (pathNameSuffix.indexOf(this.ROUTES.SEARCH) === 0) {
             return this.ROUTES.SEARCH;
         }
@@ -49,7 +49,7 @@ class Router {
     };
 
     navigate = (nextRoute, parameters) => {
-        this.navigateTo(this.getRoutePathname(nextRoute, parameters));
+        this.navigateTo(this.composeRoutePathname(nextRoute, parameters));
         this.currentRoute = nextRoute;
         this.routeCallbacks.forEach((item) => {
             if (typeof item === 'function') {
@@ -58,7 +58,7 @@ class Router {
         });
     };
 
-    getRoutePathname = (nextRoute, parameters) => {
+    composeRoutePathname = (nextRoute, parameters) => {
         let pathQuery = '';
         if (nextRoute === this.ROUTES.SEARCH) {
             pathQuery = `${this.ROUTES.SEARCH}?q=${parameters}`;
