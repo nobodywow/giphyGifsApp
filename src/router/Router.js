@@ -68,13 +68,13 @@ class Router {
     };
 
     createLinkWrapper = (nextRoute, parameters) => {
-        let createLinkWrapper = document.createElement('a');
-        createLinkWrapper.href = this.generateHref(nextRoute, parameters);
-        createLinkWrapper.onclick = (event) => {
+        let linkWrapper = document.createElement('a');
+        linkWrapper.href = this.generateHref(nextRoute, parameters);
+        linkWrapper.onclick = (event) => {
             event.preventDefault();
             this.navigate(nextRoute, parameters);
         };
-        return createLinkWrapper;
+        return linkWrapper;
     };
 }
 

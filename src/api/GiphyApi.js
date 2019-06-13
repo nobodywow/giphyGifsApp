@@ -11,7 +11,7 @@ class GiphyApi extends BaseApi {
         return `${env.BASE_URL}${id}?api_key=${env.API_KEY}`;
     };
 
-    gifDataObject = (gifData) => {
+    gifObject = (gifData) => {
         let dataObject = {};
         dataObject.id = gifData.id
         dataObject.title = gifData.title;
@@ -24,12 +24,12 @@ class GiphyApi extends BaseApi {
     };
 
     mapSingleGif = (gifData) => {
-        return this.gifDataObject(gifData.data);
+        return this.gifObject(gifData.data);
     };
 
     mapGifArray = (gifData) => {
         let dataArray = gifData.data.map((item) => {
-            return this.gifDataObject(item);
+            return this.gifObject(item);
         });
         return dataArray;
     };
