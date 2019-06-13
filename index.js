@@ -1,10 +1,10 @@
-import { api, chooseRouter } from './src/cfg/chooseImplementations.js';
+import { api, createRouter } from './src/cfg/createImplementation.js';
 import Render from './src/Render.js';
 
 const container = document.getElementById('container');
 const gifApi = api();
-const router = chooseRouter();
-const renderMethod = new Render(container, router, gifApi);
+const router = createRouter();
+const renderEngine = new Render(container, router, gifApi);
 
-renderMethod.initialize();
-renderMethod.renderElements(router.currentRoute);
+renderEngine.initialize();
+renderEngine.renderElements(router.getCurrentRoute());

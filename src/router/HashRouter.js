@@ -9,8 +9,8 @@ class HashRouter extends Router {
         window.addEventListener('hashchange', () => this.notifySubscribers());
     };
 
-    navigateTo = (pathQuery) => {
-        window.location.hash = `#/${pathQuery}`;
+    navigateTo = (pathname) => {
+        window.location.hash = `#/${pathname}`;
     };
 
     getPathname = () => {

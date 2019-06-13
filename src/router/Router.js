@@ -8,23 +8,21 @@ class Router {
             SEARCH: 'search',
             GIF: 'gif',
         };
-        this.currentRoute = '';
     }
 
     initialize = () => {
         this.addNavigationButtonsListener();
-        this.currentRoute = this.detectCurrentRoute();
     };
 
-    detectCurrentRoute = () => {
-        let pathNameSuffix = this.getPathname();
-        if (pathNameSuffix.indexOf(this.ROUTES.SEARCH) === 0) {
+    getCurrentRoute = () => {
+        let pathnameSuffix = this.getPathname();
+        if (pathnameSuffix.indexOf(this.ROUTES.SEARCH + '?q') === 0) {
             return this.ROUTES.SEARCH;
         }
-        if (pathNameSuffix.indexOf(this.ROUTES.GIF) === 0) {
+        if (pathnameSuffix === this.ROUTES.GIF) {
             return this.ROUTES.GIF;
         }
-        if (pathNameSuffix === '') {
+        if (pathnameSuffix === '') {
             return this.ROUTES.FRONT;
         }
         return null;
@@ -40,10 +38,9 @@ class Router {
     };
 
     notifySubscribers = () => {
-        this.currentRoute = this.detectCurrentRoute();
         this.routeCallbacks.forEach((item) => {
             if (typeof item === 'function') {
-                item(this.currentRoute);
+                item(this.getCurrentRoute());
             }
         });
     };
@@ -59,25 +56,25 @@ class Router {
     };
 
     composeRoutePathname = (nextRoute, parameters) => {
-        let pathQuery = '';
+        let pathname = '';
         if (nextRoute === this.ROUTES.SEARCH) {
-            pathQuery = `${this.ROUTES.SEARCH}?q=${parameters}`;
+            pathname = `${this.ROUTES.SEARCH}?q=${parameters}`;
         } else if (nextRoute === this.ROUTES.GIF) {
-            pathQuery = `${this.ROUTES.GIF}/${parameters}`;
+            pathname = `${this.ROUTES.GIF}/${parameters}`;
         } else if (nextRoute === this.ROUTES.FRONT) {
-            pathQuery = '';
+            pathname = '';
         }
-        return pathQuery;
+        return pathname;
     };
 
-    linkWrapper = (nextRoute, parameters) => {
-        let linkWrapper = document.createElement('a');
-        linkWrapper.href = this.generateHref(nextRoute, parameters);
-        linkWrapper.onclick = (event) => {
+    createLinkWrapper = (nextRoute, parameters) => {
+        let createLinkWrapper = document.createElement('a');
+        createLinkWrapper.href = this.generateHref(nextRoute, parameters);
+        createLinkWrapper.onclick = (event) => {
             event.preventDefault();
             this.navigate(nextRoute, parameters);
         };
-        return linkWrapper;
+        return createLinkWrapper;
     };
 }
 

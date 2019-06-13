@@ -16,13 +16,13 @@ class Render {
         this.routerCallbackId = this.router.subscribeForRouteChange(this.renderElements);
     };
 
-    renderElements = (state, parameters) => {
+    renderElements = (route, parameters) => {
         this.container.innerHTML = '';
-        if (state === this.router.ROUTES.FRONT) { 
+        if (route === this.router.ROUTES.FRONT) { 
             renderFrontPage(this.router);
-        } else if (state === this.router.ROUTES.SEARCH) {
+        } else if (route === this.router.ROUTES.SEARCH) {
             renderSearchPage(this.router, this.gifApi, parameters);
-        } else if (state === this.router.ROUTES.GIF) {        
+        } else if (route === this.router.ROUTES.GIF) {        
             renderGifPage(this.router, this.gifApi, parameters);
         }
     };

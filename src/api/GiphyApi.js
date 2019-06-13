@@ -3,15 +3,15 @@ import { env } from './../cfg/env.js';
 
 class GiphyApi extends BaseApi {
 
-    queryUrlForKeyword = (keyword, limit, offset) => {
+    createUrlForKeyword = (keyword, limit, offset) => {
         return `${env.BASE_URL}search?q=${keyword.replace(' ', '+')}&api_key=${env.API_KEY}&limit=${limit}&offset=${offset}`;                 
     };
 
-    queryUrlForId = (id) => {
+    createUrlForId = (id) => {
         return `${env.BASE_URL}${id}?api_key=${env.API_KEY}`;
     };
 
-    GifDataObject = (gifData) => {
+    gifDataObject = (gifData) => {
         let dataObject = {};
         dataObject.id = gifData.id
         dataObject.title = gifData.title;
@@ -24,12 +24,12 @@ class GiphyApi extends BaseApi {
     };
 
     mapSingleGif = (gifData) => {
-        return this.GifDataObject(gifData.data);
+        return this.gifDataObject(gifData.data);
     };
 
     mapGifArray = (gifData) => {
         let dataArray = gifData.data.map((item) => {
-            return this.GifDataObject(item);
+            return this.gifDataObject(item);
         });
         return dataArray;
     };

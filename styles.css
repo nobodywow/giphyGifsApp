@@ -14,14 +14,6 @@ body {
     justify-content: center;
 }
 
-.btn {
-    
-}
-
-.info-container {
-
-}
-
 .image-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
