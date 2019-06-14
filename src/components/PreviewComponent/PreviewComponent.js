@@ -12,7 +12,7 @@ let gifs = [];
 let gifOffset = 0;
 let keyword = '';
 
-export const PreviewModule = (router, gifApi, parameters) => {
+export const PreviewComponent = (router, gifApi, parameters) => {
     if (parameters) {
         keyword = parameters;
         gifs.length = 0;

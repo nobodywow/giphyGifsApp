@@ -18,7 +18,7 @@ const addEnterKeyDownListener = (input, router) => {
     });
 };
 
-export const SearchModule = (router) => {
+export const SearchComponent = (router) => {
     let searchContainer = SearchContainer();
     let searchButton = SearchButton();
     let searchInput = SearchInput();

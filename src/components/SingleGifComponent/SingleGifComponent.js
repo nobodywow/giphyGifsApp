@@ -5,7 +5,7 @@ import { UserInfoContainer } from './UserInfoContainer.js';
 
 let gifCache = {};
 
-export const SingleGifModule = async (router, gifApi, parameters) => {
+export const SingleGifComponent = async (router, gifApi, parameters) => {
     if (parameters) {
         gifCache = await gifApi.getSingleGif(parameters);
     }
