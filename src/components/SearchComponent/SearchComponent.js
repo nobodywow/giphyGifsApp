@@ -10,23 +10,23 @@ const bindSearchButtonBehaviourToInput = (input, button) => {
     });
 };
 
-const addEnterKeyDownListener = (input, router) => {
+const addEnterKeyDownListener = (input, router, routesMap) => {
     input.addEventListener('keydown', (event) => {
         if (event.keyCode === ENTER_KEY_CODE && input.value.length > 0) {
-            router.navigate(router.ROUTES.SEARCH, input.value);
+            router.navigate(routesMap.search, input.value);
         }
     });
 };
 
-export const SearchComponent = (router) => {
+export const SearchComponent = (router, routesMap) => {
     let searchContainer = SearchContainer();
     let searchButton = SearchButton();
     let searchInput = SearchInput();
     bindSearchButtonBehaviourToInput(searchInput, searchButton);
     searchButton.onclick = () => {
-        router.navigate(router.ROUTES.SEARCH, searchInput.value);
+        router.navigate(routesMap.search, searchInput.value);
     };
-    addEnterKeyDownListener(searchInput, router);
+    addEnterKeyDownListener(searchInput, router, routesMap);
     searchContainer.appendChild(searchInput);
     searchContainer.appendChild(searchButton);    
     return searchContainer;

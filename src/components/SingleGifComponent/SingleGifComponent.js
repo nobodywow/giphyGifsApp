@@ -5,7 +5,7 @@ import { UserInfoContainer } from './UserInfoContainer.js';
 
 let gifCache = {};
 
-export const SingleGifComponent = async (router, gifApi, parameters) => {
+export const SingleGifComponent = async (router, gifApi, parameters, routesMap) => {
     if (parameters) {
         gifCache = await gifApi.getSingleGif(parameters);
     }
@@ -14,7 +14,7 @@ export const SingleGifComponent = async (router, gifApi, parameters) => {
     let gifImage = Image(gifCache.originalImgURL);
     let backButton = BackButton();
     backButton.onclick = () => {
-        router.navigate(router.ROUTES.FRONT);
+        router.navigate(routesMap.front);
     };
     gifContainer.appendChild(gifImage);
     gifContainer.appendChild(infoContainer);

@@ -12,7 +12,7 @@ let gifs = [];
 let gifOffset = 0;
 let keyword = '';
 
-export const PreviewComponent = (router, gifApi, parameters) => {
+export const PreviewComponent = (router, gifApi, parameters, routesMap) => {
     if (parameters) {
         keyword = parameters;
         gifs.length = 0;
@@ -25,15 +25,15 @@ export const PreviewComponent = (router, gifApi, parameters) => {
     if (gifs.length === 0) {
         (async () => {
             gifs = await gifApi.getGifArray(keyword, GIF_LIMIT, gifOffset);
-            showGifPreviews(gifs, router, imageContainer);
+            showGifPreviews(gifs, router, imageContainer, routesMap);
         })();
     } else {
-        showGifPreviews(gifs, router, imageContainer);
+        showGifPreviews(gifs, router, imageContainer, routesMap);
     }    
     loadButton.onclick = async () => {
         gifOffset += GIF_OFFSET;
         let offsetArray = await gifApi.getGifArray(keyword, GIF_LIMIT, gifOffset);
-        showGifPreviews(offsetArray, router, imageContainer);
+        showGifPreviews(offsetArray, router, imageContainer, routesMap);
         gifs = [...gifs, ...offsetArray];
     };
     buttonContainer.appendChild(loadButton);
@@ -42,13 +42,13 @@ export const PreviewComponent = (router, gifApi, parameters) => {
     return contentContainer;
 };
 
-const showGifPreviews = (gifData, router, imageContainer) => {
+const showGifPreviews = (gifData, router, imageContainer, routesMap) => {
     if (gifData.length === 0) {
         let errorText = ErrorMessage();
         imageContainer.appendChild(errorText);
     } else {
         gifData.forEach((item) => {
-            let link = router.createLinkWrapper(router.ROUTES.GIF, item.id);
+            let link = router.createLinkWrapper(routesMap.gif, 'gif-preview', item.id);
             let image = Image(item.previewImgURL);
             link.appendChild(image);
             imageContainer.appendChild(link);

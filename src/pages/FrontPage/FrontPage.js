@@ -3,7 +3,7 @@ import { setContainerChildren } from '../utils/helper.js';
 
 const container = document.getElementById('container');
 
-export const renderFrontPage = (router) => {
-    let searchContainer = SearchComponent(router);
+export const renderFrontPage = (router, routesMap) => {
+    let searchContainer = SearchComponent(router, routesMap);
     setContainerChildren(container, searchContainer);
 };
