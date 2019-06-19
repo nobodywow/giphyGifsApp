@@ -13,7 +13,7 @@ const bindSearchButtonBehaviourToInput = (input, button) => {
 const addEnterKeyDownListener = (input, router, routesMap) => {
     input.addEventListener('keydown', (event) => {
         if (event.keyCode === ENTER_KEY_CODE && input.value.length > 0) {
-            router.navigate(routesMap.search, input.value);
+            router.navigate(routesMap.search, { q: input.value });
         }
     });
 };
@@ -24,7 +24,7 @@ export const SearchComponent = (router, routesMap) => {
     let searchInput = SearchInput();
     bindSearchButtonBehaviourToInput(searchInput, searchButton);
     searchButton.onclick = () => {
-        router.navigate(routesMap.search, searchInput.value);
+        router.navigate(routesMap.search, { q: searchInput.value });
     };
     addEnterKeyDownListener(searchInput, router, routesMap);
     searchContainer.appendChild(searchInput);

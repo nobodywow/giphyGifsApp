@@ -14,7 +14,7 @@ let keyword = '';
 
 export const PreviewComponent = (router, gifApi, parameters, routesMap) => {
     if (parameters) {
-        keyword = parameters;
+        keyword = parameters.q; /////////////
         gifs.length = 0;
         gifOffset = 0;
     }

@@ -1,7 +1,7 @@
 import { renderFrontPage } from './pages/FrontPage/FrontPage.js';
 import { renderSearchPage } from './pages/SearchPage/SearchPage.js';
 import { renderGifPage } from './pages/GifPage/GifPage.js';
-import { routesMap, routes } from '../src/cfg/router.config.js';
+import { routesMap } from '../src/cfg/router.config.js';
 
 class Render {
     
@@ -13,7 +13,6 @@ class Render {
     }
 
     initialize = () => {
-        this.router.initialize(routes);
         this.routerCallbackId = this.router.subscribeForRouteChange(this.renderElements);
     };
 
