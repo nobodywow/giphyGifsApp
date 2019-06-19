@@ -1,10 +1,11 @@
 import { createRouter } from './createImplementation.js';
+import { env } from './env.js';
 
-export const config = {
-    pathname: '/giphyGifsApp',
+const config = {
+    pathname: env.PATHNAME,
 };
 
-export const routes = [
+const routes = [
     { name: 'front', route: '/', isQuery: false },
     { name: 'search', route: '/search', isQuery: true },
     { name: 'gif', route: '/gif', isQuery: false }
@@ -16,7 +17,7 @@ export const routesMap = {
     gif: 'gif'
 };
 
-export const initializeRouter = (config, routes) => {
+export const initializeRouter = () => {
     let router = createRouter(config);
     router.initialize(routes);
     return router;
