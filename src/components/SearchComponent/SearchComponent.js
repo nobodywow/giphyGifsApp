@@ -2,7 +2,7 @@ import { SearchButton } from './SearchButton.js';
 import { SearchContainer } from './SearchContainer.js';
 import { SearchInput } from './SearchInput.js';
 
-const ENTER_KEY_CODE = '13';
+const ENTER_KEY_CODE = 13;
 
 const bindSearchButtonBehaviourToInput = (input, button) => {
     input.addEventListener('keyup', () => {

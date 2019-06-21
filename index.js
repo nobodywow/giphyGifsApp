@@ -8,4 +8,4 @@ const router = initializeRouter();
 const renderEngine = new Render(container, router, gifApi);
 
 renderEngine.initialize();
-renderEngine.renderElements(router.getCurrentRoute());
+renderEngine.renderElements(router.getCurrentRoute(), router.getParametersFromUrl());
