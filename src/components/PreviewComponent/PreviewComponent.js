@@ -48,7 +48,7 @@ const showGifPreviews = (gifData, router, imageContainer, routesMap) => {
         imageContainer.appendChild(errorText);
     } else {
         gifData.forEach((item) => {
-            let link = router.createLinkWrapper(routesMap.gif, 'gif-preview', item.id);
+            let link = router.createLinkWrapper(routesMap.gif, 'gif-preview', {id: item.id});
             let image = Image(item.previewImgURL);
             link.appendChild(image);
             imageContainer.appendChild(link);

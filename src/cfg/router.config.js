@@ -6,9 +6,9 @@ const config = {
 };
 
 const routes = [
-    { name: 'front', route: '/', isQuery: false },
-    { name: 'search', route: '/search', isQuery: true },
-    { name: 'gif', route: '/gif', isQuery: false }
+    { name: 'front', route: '/' },
+    { name: 'search', route: '/search' },
+    { name: 'gif', route: '/gif/:id' }
 ];
 
 export const routesMap = {
